@@ -60,7 +60,16 @@ class TestCustomerEndpoints(unittest.TestCase):
 
 
     # test get all customers
-    def test_get_customers(self):
+    @patch('services.customerService.create_customer')
+    def test_get_customers(self, mock_create):
+        # create mock customer
+        mock_customer = create_test_customer()
+        mock_create.return_value = mock_customer
+        payload = create_customer_payload(mock_customer)
+        create_response = self.app.post('/customers/', json=payload)
+        self.assertEqual(create_response.status_code, 201)
+
+        # get all from customer table
         response = self.app.get('/customers/')
         self.assertEqual(response.status_code, 200)
     
