@@ -4,9 +4,9 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 from flask_swagger_ui import get_swaggerui_blueprint
-from database import db
+from database import db, migrate
 from schemas import ma
 from limiter import limiter
 from caching import cache
@@ -43,7 +43,7 @@ def create_app(config_name):
     ma.init_app(app)
     limiter.init_app(app)
     cache.init_app(app)
-    migrate = Migrate(app, db)
+    migrate.init_app(app, db)
 
     blueprint_config(app)
     config_rate_limit()
