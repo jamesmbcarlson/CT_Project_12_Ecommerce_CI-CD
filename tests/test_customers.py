@@ -42,8 +42,8 @@ def create_customer_payload(mock_customer):
 class TestCustomerEndpoints(unittest.TestCase):
     def setUp(self):
         app = create_app('DevelopmentConfig')
+        app.config['TESTING'] = True
         self.app = app.test_client()
-        self.app.testing = True
 
 
     # test successful creation of customer
@@ -61,7 +61,8 @@ class TestCustomerEndpoints(unittest.TestCase):
 
     # test get all customers
     @patch('services.customerService.create_customer')
-    def test_get_customers(self, mock_create):
+    @patch('services.customerService.get_all')
+    def test_get_customers(self, mock_create, mock_get):
         # create mock customer
         mock_customer = create_test_customer()
         mock_create.return_value = mock_customer
@@ -69,9 +70,10 @@ class TestCustomerEndpoints(unittest.TestCase):
         create_response = self.app.post('/customers/', json=payload)
         self.assertEqual(create_response.status_code, 201)
 
-        # get all from customer table
-        response = self.app.get('/customers/')
-        self.assertEqual(response.status_code, 200)
+        # get list of customers
+        mock_get.return_value = [mock_customer]
+        get_response = self.app.get(f'/customers/')
+        self.assertEqual(get_response.status_code, 200)
     
 
     # test get one customer by id
