@@ -35,8 +35,8 @@ def create_product_payload(mock_product):
 class TestProductEndpoints(unittest.TestCase):
     def setUp(self):
         app = create_app('DevelopmentConfig')
+        app.config['TESTING'] = True
         self.app = app.test_client()
-        self.app.testing = True
 
 
     # test successful creation of product

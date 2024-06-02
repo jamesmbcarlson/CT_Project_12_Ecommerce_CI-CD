@@ -413,10 +413,12 @@ definitions:
       username:
         type: "string"
         description: "The username of the user"
+        example: "admin"
       password:
         type: "string"
         format: "password"
         description: "The password associated with username"
+        example: "password123"
     required:
       - "username"
       - "password"

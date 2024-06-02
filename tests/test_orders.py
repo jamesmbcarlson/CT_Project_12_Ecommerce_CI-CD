@@ -14,8 +14,8 @@ fake = Faker()
 class TestOrderEndpoints(unittest.TestCase):
     def setUp(self):
         app = create_app('DevelopmentConfig')
+        app.config['TESTING'] = True
         self.app = app.test_client()
-        self.app.testing = True
 
     # test get all orders endpoint
     def test_get_orders(self):
