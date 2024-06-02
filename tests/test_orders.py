@@ -18,7 +18,15 @@ class TestOrderEndpoints(unittest.TestCase):
         self.app = app.test_client()
 
     # test get all orders endpoint
-    def test_get_orders(self):
+    @patch('services.orderService.find_all')
+    def test_get_orders(self, mock_get):
+        mock_get.return_value = [{
+            "id": 1,
+            "customer_id": 1,
+            "products": [
+                {"id": 1}
+            ]
+        }]
         response = self.app.get('/orders/')
         self.assertEqual(response.status_code, 200)
     

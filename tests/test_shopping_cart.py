@@ -9,8 +9,6 @@ import unittest
 from unittest.mock import MagicMock, patch
 from faker import Faker
 import logging
-from models.customer import Customer
-from database import db
 
 fake = Faker()
 
@@ -27,7 +25,7 @@ class TestShoppingCartEndpoints(unittest.TestCase):
     def test_create_cart(self, mock_current_user, mock_cart):
         
         mock_user = MagicMock()
-        mock_user.id = 3
+        mock_user.id = 2
         mock_current_user.return_value = mock_user
 
         mock_cart.return_value = "Shopping cart created! Add your products!"
@@ -51,11 +49,20 @@ class TestShoppingCartEndpoints(unittest.TestCase):
 
 
     # test get all carts endpoint
-    def test_get_carts(self):
+    @patch('services.shoppingCartService.get_cart')
+    def test_get_cart(self, mock_get):
+        mock_get.return_value = [{
+            "id": 1,
+            "customer_id": 1,
+            "products": [
+                {"id": 1}
+            ]
+        }]
         response = self.app.get('/cart/')
         self.assertEqual(response.status_code, 200)
     
 
+    # TO-DO: create remaining tests
     # test add to cart endpoint
     @patch('services.shoppingCartService.add_to_cart')
     def test_add_to_cart(self, mock_product):

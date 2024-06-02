@@ -53,7 +53,18 @@ class TestProductEndpoints(unittest.TestCase):
 
 
     # test get all products
-    def test_get_products(self):
+    @patch('services.productService.create_product')
+    @patch('services.productService.find_all')
+    def test_get_products(self, mock_create, mock_get):
+        # create mock product
+        mock_product = create_test_product()
+        mock_create.return_value = mock_product
+        payload = create_product_payload(mock_product)
+        create_response = self.app.post('/products/', json=payload)
+        self.assertEqual(create_response.status_code, 201)
+
+        # get all products
+        mock_get.return_value = [mock_product]
         response = self.app.get('/products/')
         self.assertEqual(response.status_code, 200)
     
