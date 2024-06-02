@@ -20,12 +20,11 @@ class TestShoppingCartEndpoints(unittest.TestCase):
 
 
     # test create cart
-    @patch('services.customerService.get_token')
+    @patch('services.shoppingCartService.create_cart')
     @patch('auth.token_auth.current_user')
     def test_create_cart(self, mock_current_user, mock_cart):
-        
         mock_user = MagicMock()
-        mock_user.id = 2
+        mock_user.id = 1
         mock_current_user.return_value = mock_user
 
         mock_cart.return_value = "Shopping cart created! Add your products!"
@@ -36,6 +35,7 @@ class TestShoppingCartEndpoints(unittest.TestCase):
 
     # test get one cart by id endpoint
     @patch('services.shoppingCartService.get_cart')
+    
     def test_get_cart(self, mock_get):
         mock_get.return_value = {
             "id": 1,
@@ -49,8 +49,8 @@ class TestShoppingCartEndpoints(unittest.TestCase):
 
 
     # test get all carts endpoint
-    @patch('services.shoppingCartService.get_cart')
-    def test_get_cart(self, mock_get):
+    @patch('services.shoppingCartService.find_all')
+    def test_get_carts(self, mock_get):
         mock_get.return_value = [{
             "id": 1,
             "customer_id": 1,
