@@ -3,7 +3,7 @@ import sys
 import os
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, parent_dir)
-from app import create_app
+from app import app
 
 import unittest
 from unittest.mock import MagicMock, patch
@@ -41,10 +41,8 @@ def create_customer_payload(mock_customer):
 
 class TestCustomerEndpoints(unittest.TestCase):
     def setUp(self):
-        app = create_app('DevelopmentConfig')
-        app.config['TESTING'] = True
         self.app = app.test_client()
-
+        self.app.testing = True
 
     # test successful creation of customer
     @patch('services.customerService.create_customer')
