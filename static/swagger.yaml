@@ -17,9 +17,6 @@ securityDefinitions:
     name: Authorization
     in: header
 
-security:
-  - bearerAuth: []
-
 paths: 
   /login:
     post:
@@ -52,7 +49,8 @@ paths:
               message: "Username and/or password is incorrect"
   /customers:
     post:
-      security: [] # exclude from global security definition
+      security:
+      - bearerAuth: []
       summary: "Create a new customer"
       description: "Will add a new customer to the database"
       parameters:
@@ -73,6 +71,8 @@ paths:
             application/json:
               error: "Username is already taken. Please create a unique username."
     get:
+      security:
+      - bearerAuth: []
       summary: "Get Customers Endpoint"
       description: "Get all customer data from customer table"
       parameters:
@@ -95,6 +95,8 @@ paths:
               $ref: "#/definitions/CustomerResponse"
   /customers/{customer_id}:
     get:
+      security:
+      - bearerAuth: []
       summary: "Get Customer Endpoint"
       description: "Get one customer's data by ID"
       parameters:
@@ -107,6 +109,8 @@ paths:
           schema:
             $ref: "#/definitions/CustomerResponse"
     put:
+      security:
+      - bearerAuth: []
       summary: "Update Customer Endpoint"
       description: "Update customer's data at ID"
       parameters:
@@ -124,6 +128,8 @@ paths:
           schema:
             $ref: "#/definitions/CustomerResponse"
     delete:
+      security:
+      - bearerAuth: []
       summary: "Delete Customer Endpoint"
       description: "Delete customer at ID"
       parameters:
@@ -139,6 +145,8 @@ paths:
               status: "success"
   /products:
     post:
+      security:
+      - bearerAuth: []
       summary: "Create a new product"
       description: "Will add a new product to the database"
       parameters:
@@ -154,6 +162,8 @@ paths:
           schema:
             $ref: "#/definitions/Product"
     get:
+      security:
+      - bearerAuth: []
       summary: "Get Products Endpoint"
       description: "Get all product data from product table"
       parameters:
