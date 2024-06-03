@@ -10,6 +10,16 @@ consumes:
   - 'application/json'
 produces:
   - 'application/json'
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+security:
+  - bearerAuth: []
+
 paths: 
   /login:
     post:
@@ -42,6 +52,7 @@ paths:
               message: "Username and/or password is incorrect"
   /customers:
     post:
+      security: [] # exclude from global security definition
       summary: "Create a new customer"
       description: "Will add a new customer to the database"
       parameters:
@@ -542,8 +553,3 @@ definitions:
               example: "7"
 
       
-securityDefinitions:
-  bearerAuth:
-    type: apiKey
-    name: Authorization
-    in: header
