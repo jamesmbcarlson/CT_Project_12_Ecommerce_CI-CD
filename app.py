@@ -3,6 +3,7 @@
 # Backend Specialization, Module 13 Lesson 1 Assignment: REST API Design Patterns
 
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 # from flask_migrate import Migrate
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -45,6 +46,7 @@ def create_app(config_name):
     limiter.init_app(app)
     cache.init_app(app)
     migrate.init_app(app, db)
+    CORS(app)
 
     blueprint_config(app)
     config_rate_limit()
