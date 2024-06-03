@@ -5,13 +5,13 @@ info:
   version: '1.0.0'
 host: 'ct-project-12-ecommerce-ci-cd.onrender.com'
 schemes:
-  - 'http'
+  - 'https'
 consumes: 
   - 'application/json'
 produces:
   - 'application/json'
 paths: 
-  /login/:
+  /login:
     post:
       summary: "Token Endpoint"
       description: "Simulates login. Endpoint for user authentication. Matching username/password must be entered."
@@ -439,7 +439,7 @@ definitions:
     properties:
       error:
         type: "string"
-        description: "The description of the error"
+        description: "A valid token is need for all endpoints outside of login. Valid tokens expire after an hour from when they were issued."
         example: "Invalid token. Please try again"
   Customer:
     type: "object"
