@@ -40,7 +40,7 @@ paths:
             application/json:
               status: "error"
               message: "Username and/or password is incorrect"
-  /customers/:
+  /customers:
     post:
       summary: "Create a new customer"
       description: "Will add a new customer to the database"
@@ -126,7 +126,7 @@ paths:
             application/json:
               message: "Customer with ID 10 has been removed"
               status: "success"
-  /products/:
+  /products:
     post:
       summary: "Create a new product"
       description: "Will add a new product to the database"
@@ -207,7 +207,7 @@ paths:
             application/json:
               message: "Product with ID 10 has been removed"
               status: "success"
-  /orders/:
+  /orders:
     get:
       summary: "Get Orders Endpoint"
       description: "Get all order data from order table"
