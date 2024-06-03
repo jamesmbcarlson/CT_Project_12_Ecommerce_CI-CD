@@ -20,9 +20,31 @@ securityDefinitions:
 security:
   - bearerAuth: []
 
+tags: [
+  {
+    name: "Token Authentication",
+    description: "All other endpoints require a valid token."
+  },
+  {
+    name: "Customers"
+  },
+  {
+    name: "Products"
+  },
+  {
+    name: "Shopping Cart"
+  },
+  {
+    name: "Orders"
+  }
+]
+
 paths: 
   /login:
     post:
+      tags: [
+        "Token Authentication"
+      ]
       security: [] # exclude from global security definition
       summary: "Token Endpoint"
       description: "Simulates login. Endpoint for user authentication. Matching username/password must be entered."
@@ -53,6 +75,9 @@ paths:
               message: "Username and/or password is incorrect"
   /customers:
     post:
+      tags: [
+        "Customers"
+      ]
       summary: "Create a new customer"
       description: "Will add a new customer to the database"
       parameters:
@@ -73,6 +98,9 @@ paths:
             application/json:
               error: "Username is already taken. Please create a unique username."
     get:
+      tags: [
+        "Customers"
+      ]
       summary: "Get Customers Endpoint"
       description: "Get all customer data from customer table"
       parameters:
@@ -95,6 +123,9 @@ paths:
               $ref: "#/definitions/CustomerResponse"
   /customers/{customer_id}:
     get:
+      tags: [
+        "Customers"
+      ]
       summary: "Get Customer Endpoint"
       description: "Get one customer's data by ID"
       parameters:
@@ -107,6 +138,9 @@ paths:
           schema:
             $ref: "#/definitions/CustomerResponse"
     put:
+      tags: [
+        "Customers"
+      ]
       summary: "Update Customer Endpoint"
       description: "Update customer's data at ID"
       parameters:
@@ -117,13 +151,21 @@ paths:
           name: "body"
           description: "Update customer data with any field"
           schema:
-            $ref: "#/definitions/CustomerRequest"
+            type: "object"
+            properties:
+              phone:
+                type: "string"
+                description: "Example: New phone number"
+                example: "(719)123-4567"
       responses:
         201:
           description: "CREATED"
           schema:
             $ref: "#/definitions/CustomerResponse"
     delete:
+      tags: [
+        "Customers"
+      ]
       summary: "Delete Customer Endpoint"
       description: "Delete customer at ID"
       parameters:
@@ -139,6 +181,9 @@ paths:
               status: "success"
   /products:
     post:
+      tags: [
+        "Products"
+      ]
       summary: "Create a new product"
       description: "Will add a new product to the database"
       parameters:
@@ -154,6 +199,9 @@ paths:
           schema:
             $ref: "#/definitions/Product"
     get:
+      tags: [
+        "Products"
+      ]
       summary: "Get Products Endpoint"
       description: "Get all product data from product table"
       parameters:
@@ -176,6 +224,9 @@ paths:
               $ref: "#/definitions/Product"
   /products/{product_id}:
     get:
+      tags: [
+        "Products"
+      ]
       summary: "Get Product Endpoint"
       description: "Get one product's data by ID"
       parameters:
@@ -188,6 +239,9 @@ paths:
           schema:
             $ref: "#/definitions/Product"
     put:
+      tags: [
+        "Products"
+      ]
       summary: "Update Product Endpoint"
       description: "Update product's data at ID"
       parameters:
@@ -198,13 +252,21 @@ paths:
           name: "body"
           description: "Update product data with any field"
           schema:
-            $ref: "#/definitions/Product"
+            type: "object"
+            properties:
+              price:
+                type: "float"
+                description: "Example: New price"
+                example: "199.95"
       responses:
         201:
           description: "CREATED"
           schema:
             $ref: "#/definitions/Product"
     delete:
+      tags: [
+        "Products"
+      ]
       summary: "Delete Product Endpoint"
       description: "Delete product at ID"
       parameters:
@@ -220,6 +282,9 @@ paths:
               status: "success"
   /orders:
     get:
+      tags: [
+        "Orders"
+      ]
       summary: "Get Orders Endpoint"
       description: "Get all order data from order table"
       parameters:
@@ -240,6 +305,9 @@ paths:
               $ref: "#/definitions/Order"
   /orders/{order_id}:
     get:
+      tags: [
+        "Orders"
+      ]
       summary: "Get Order Endpoint"
       description: "Get one order's data by ID"
       parameters:
@@ -253,6 +321,9 @@ paths:
             $ref: "#/definitions/Order"
   /orders/track/{order_id}:
     get:
+      tags: [
+        "Orders"
+      ]
       summary: "Track Order Endpoint"
       description: "Get status of order by ID"
       parameters:
@@ -272,6 +343,9 @@ paths:
               error: "Order could not be found with ID 66"
   /cart:
     post:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Create Shopping Cart Endpoint"
       description: "Creates a new shopping cart and sets it as the target for other shopping cart actions"
       responses:
@@ -281,6 +355,9 @@ paths:
             application/json:
               success: "Shopping cart created! Add your products!"
     get:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "View Shopping Carts Endpoint"
       description: "Get all open shopping carts"
       parameters:
@@ -303,6 +380,9 @@ paths:
               $ref: "#/definitions/ShoppingCart"
   /cart/{cart_id}:
     get:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Get Shopping Cart Endpoint"
       description: "Get one shopping cart's data by ID"
       parameters:
@@ -315,6 +395,9 @@ paths:
           schema:
             $ref: "#/definitions/ShoppingCart"
     put:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Set Active Cart Endpoint"
       description: "Set shopping cart at ID to target cart for other endpoints"
       parameters:
@@ -328,6 +411,9 @@ paths:
             $ref: "#/definitions/ShoppingCart"
   /cart/add/{product_id}:
     put:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Add Product to Cart Endpoint"
       description: "Add product to target cart by product ID"
       parameters:
@@ -347,6 +433,9 @@ paths:
               error: "Not enough products in stock"
   /cart/remove/{product_id}:
     put:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Remove Product from Cart Endpoint"
       description: "Remove product from target cart by product ID"
       parameters:
@@ -366,6 +455,9 @@ paths:
               error: "Product not in cart!"
   /cart/update/{product_id}:
     put:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Update Product Quantity Endpoint"
       description: "Update product quantity for item in cart"
       parameters:
@@ -396,6 +488,9 @@ paths:
               error: "Product not found"
   /cart/empty:
     put:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Empty Shopping Cart Endpoint"
       description: "Empties shopping cart of all products"
       responses:
@@ -406,6 +501,9 @@ paths:
               success: "Your cart is now empty."
   /cart/checkout:
     delete:
+      tags: [
+        "Shopping Cart"
+      ]
       summary: "Checkout Endpoint"
       description: "Checkout with active cart, copying data to a new Order, and deleting a cart"
       responses:

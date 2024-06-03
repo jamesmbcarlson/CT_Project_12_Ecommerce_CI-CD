@@ -67,11 +67,13 @@ def config_rate_limit():
     limiter.limit("100 per day")(order_blueprint)
     limiter.limit("100 per day")(shopping_cart_blueprint)
 
+
+
 if __name__ == "__main__":
     app = create_app('DevelopmentConfig')
 
-    # with app.app_context():
-    #     db.drop_all()
-    #     db.create_all()
+    @app.route('/')
+    def index():
+        return "Check out the <a href='/api/docs/'>API documentation</a> to learn about this application's endpoints!"
         
     app.run(debug=True)
